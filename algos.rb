@@ -51,7 +51,15 @@ end
 
 # Given an array, find the int that appears an odd number of times.
 # There will always be only one integer that appears an odd number of times.
-
+def find_it(seq)
+  h = Hash.new(0)
+  seq.each do |i|
+    h[i] += 1
+  end
+  h.each do |v, k|
+    return v.to_i if k % 2 != 0
+  end
+end
 
 
 
