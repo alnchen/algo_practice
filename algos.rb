@@ -94,6 +94,21 @@ end
 
 
 # You are given an array (which will have a length of at least 3, but could
-# be very large) containing integers. The array is either entirely comprised of 
+# be very large) containing integers. The array is either entirely comprised of
 # odd integers or entirely comprised of even integers except for a single integer N.
 # Write a method that takes the array as an argument and returns N.
+def find_outlier(integers)
+  odd_arr = []
+  even_arr = []
+  integers.each do |n|
+    if n.odd?
+      odd_arr << n
+    else even_arr << n
+    end
+    if odd_arr.length > 1 && even_arr.length == 1
+      return even_arr[0]
+    elsif even_arr.length > 1 && odd_arr.length == 1
+      return odd_arr[0]
+    end
+  end
+end
