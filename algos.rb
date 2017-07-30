@@ -46,3 +46,15 @@ def longest_common_prefix(strs)
     end
     ""
 end
+
+
+
+# Given an array, find the int that appears an odd number of times.
+# There will always be only one integer that appears an odd number of times.
+
+
+
+
+# Write a function, persistence, that takes in a positive parameter num and returns
+# its multiplicative persistence, which is the number of times you must multiply the
+# digits in num until you reach a single digit.
