@@ -112,3 +112,9 @@ def find_outlier(integers)
     end
   end
 end
+
+
+#given two strings, pattern ('abba') and input ('redbluebluered'). check for matching pattern
+def word_pattern(pattern, input)
+
+end
