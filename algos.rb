@@ -116,5 +116,10 @@ end
 
 #given two strings, pattern ('abba') and input ('redbluebluered'). check for matching pattern
 def word_pattern(pattern, input)
+  num_of_chars = pattern.chars.uniq.length
+  first_word = 1
+  while first_word < (num_of_chars - (first_word * 2)) / 2
 
+  end
+  0
 end
