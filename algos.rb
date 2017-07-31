@@ -123,3 +123,10 @@ def word_pattern(pattern, input)
   end
   0
 end
+
+
+# Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
+# determine if the input string is valid.
+def valid_parenthesis(string)
+  
+end
