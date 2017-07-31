@@ -128,5 +128,17 @@ end
 # Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
 # determine if the input string is valid.
 def valid_parenthesis(string)
-  
+  stack = []
+  brackets = {
+    '[' => ']',
+    '(' => ')',
+    '{' => '}'
+  }
+  string.chars.each do |char|
+    if brackets[char]
+      stack 
+    else
+
+    end
+  end
 end
