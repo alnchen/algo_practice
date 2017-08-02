@@ -81,16 +81,17 @@ end
 # and find an index N where the sum of the integers to the left of N is equal to the
 # sum of the integers to the right of N. If there is no index that would make this happen, return -1.
 def find_even_index(arr)
-  left = 0
-  right = arr.reduce(&:+)
-  arr.each_with_index do |x, i|
-    right -= x
-    return i if left == right
-    left += x
+  arr.each_with_index do |num, idx|
+    next if idx == arr.length - 1
+    left_sum = arr[0...idx].reduce(:+)
+    right_sum = arr[idx+1..-1].reduce(:+)
+    return idx if left_sum == right_sum
   end
   -1
 end
 
+# p find_even_index([1,1,1,4,1,2])
+# p find_even_index([2,4,2])
 
 
 # You are given an array (which will have a length of at least 3, but could
@@ -116,6 +117,7 @@ end
 
 #given two strings, pattern ('abba') and input ('redbluebluered'). check for matching pattern
 def word_pattern(pattern, input)
+  # maybe helper method to get permutations of split string
   num_of_chars = pattern.chars.uniq.length
   first_word = 1
   while first_word < (num_of_chars - (first_word * 2)) / 2
@@ -150,9 +152,9 @@ def valid_parenthesis(string)
   true
 end
 
-p valid_parenthesis('[{}]')
-p valid_parenthesis('[(])')
-p valid_parenthesis('[]{}()')
+# p valid_parenthesis('[{}]')
+# p valid_parenthesis('[(])')
+# p valid_parenthesis('[]{}()')
 
 # Given a string, you need to reverse the order of characters in each word within a
 # sentence while still preserving whitespace and initial word order.
