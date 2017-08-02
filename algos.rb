@@ -134,15 +134,17 @@ def valid_parenthesis(string)
     '(' => ')',
     '{' => '}'
   }
-  string.chars.each do |char|
-    if brackets[char]
-      stack
-    else
-
-    end
-  end
+  # string.chars.each do |char|
+  #   if brackets[char]
+  #     stack
+  #   else
+  #
+  #   end
+  # end
 end
 
+p valid_parenthesis('[{}]')
+p valid_parenthesis('[(])')
 
 # Given a string, you need to reverse the order of characters in each word within a
 # sentence while still preserving whitespace and initial word order.
