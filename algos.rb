@@ -218,18 +218,18 @@ end
 #    15   7
 # Output: [3, 14.5, 11]
 def average_of_levels(root)
-    count = []
-    res = []
-    average(root, 0, res, count)
+  count = []
+  res = []
+  average(root, 0, res, count)
+  res.each_with_index { |sum, idx| res[idx] = sum.to_f / count[idx]}
 end
 
 def average(node, level, res_of_nodelvl, count_of_nodelvl)
-    res_of_nodelvl[level] ? res_of_nodelvl[level] += node.val : res_of_nodelvl[level] = node.val
-    count_of_nodelvl[level] ? count_of_nodelvl[level] += 1 : count_of_nodelvl[level] = 1
+  # pass in same level count to children of same node which adds sum and # of nodes in parent function's count/res 
+  return if node == nil
+  res_of_nodelvl[level] ? res_of_nodelvl[level] += node.val : res_of_nodelvl[level] = node.val
+  count_of_nodelvl[level] ? count_of_nodelvl[level] += 1 : count_of_nodelvl[level] = 1
 
-    if node.left
-        average(node.left, level + 1, res_of_nodelvl, count_of_nodelvl)
-    elsif node.right
-        average(node.right, level + 1, res_of_nodelvl, count_of_nodelvl)
-    end
+  average(node.left, level + 1, res_of_nodelvl, count_of_nodelvl)
+  average(node.right, level + 1, res_of_nodelvl, count_of_nodelvl)
 end
