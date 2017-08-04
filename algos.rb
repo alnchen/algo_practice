@@ -304,7 +304,7 @@ def bubblesort(array)
         sorted = true
         idx = 0
         while idx < length - 1
-          if array[idx] < array[idx +1]
+          if array[idx] > array[idx +1]
             array[idx], array[idx+1] = array[idx+1], array[idx]
             swaps += 1
             sorted = false
@@ -315,3 +315,5 @@ def bubblesort(array)
   p swaps
   array
 end
+
+# p bubblesort([1,2,3,1])
