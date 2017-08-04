@@ -416,7 +416,7 @@ pepes = ['Donald Trump Pepe',
 # custom fibs
 # given signature (starting seq and also length = prev window range)
 # indexes = indices of nums to sum up within the prev window range
-# n = return index 
+# n = return index
 
 def custom_fib(signature,indexes,n)
   length = signature.length
@@ -430,3 +430,42 @@ def custom_fib(signature,indexes,n)
 
   signature[n]
 end
+
+
+
+
+# Implement an EventEmitter class with two methods, on() and trigger().
+#
+# On allows you to 'subscribe' to an event, passing in a key as a parameter,
+# and a Ruby block to be executed when this particular event is triggered.
+#
+# The trigger method accepts a key as a parameter. The trigger method calls
+# all blocks that have been subscribed to the key parameter. This method should
+# return an array of all of the blocks for the key parameter.
+#
+# triggering a key which has no subscribed blocks should return an empty array.
+class EventEmitter
+  def initialize
+    @stack = {}
+  end
+
+  def on(key, &block)
+    @stack[key] ? @stack[key] << block : @stack[key] = [block]
+  end
+
+  def trigger(key)
+
+    @stack[key] ? @stack[key].each(&:call) : []
+  end
+end
+
+e = EventEmitter.new
+
+e.on('foo') { puts 'foo' }
+e.on('foo') { puts 'bar' }
+e.on('foo') { puts 'baz' }
+
+e.trigger('foo')
+# => 'foo'
+# => 'bar'
+# => 'baz'
