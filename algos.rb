@@ -240,3 +240,80 @@ end
 
 # Given the words in the magazine and the words in the ransom note, print Yes if he can
 # replicate his ransom note exactly using whole words from the magazine; otherwise, print No.
+def enough_words?(magazine, ransom)
+  magazine_words = {}
+  ransom_words = {}
+
+  magazine.each { |word| magazine_words[word] ? magazine_words[word] += 1 : magazine_words[word] = 1}
+  ransom.each { |word| ransom_words[word] ? ransom_words[word] += 1 : ransom_words[word] = 1}
+
+  ransom_words.each do |word, reps|
+     if !magazine_words[word] || magazine_words[word] <  reps
+         return 'No'
+     end
+  end
+
+  'Yes'
+end
+
+# p enough_words?(['hello', 'how', 'are', 'you'], ['hello', 'you'])
+
+
+
+
+# Given  strings of brackets, determine whether each sequence of brackets is balanced.
+# If a string is balanced, print YES on a new line; otherwise, print NO on a new line.
+def balanced_brackets(str)
+  stack = []
+  brackets = {
+      '(' => ')',
+      '[' => ']',
+      '{' => '}'
+      }
+
+  str.strip.split('').each do |char|
+      if brackets.keys.include?(char)
+          stack.push(char)
+      elsif brackets.values.include?(char)
+          if stack.last != brackets.key(char)
+              return false
+          else
+              stack.pop
+          end
+      else
+          next
+      end
+  end
+
+  stack.empty? ? true : false
+end
+
+# p balanced_brackets('[]')
+# p balanced_brackets('[(])')
+# p balanced_brackets('[()]{')
+
+
+
+
+# bubblesort
+def bubblesort(array)
+  swaps = 0
+  sorted = false
+  length = array.length
+    until sorted
+        sorted = true
+        idx = 0
+        while idx < length - 1
+          if array[idx] > array[idx +1]
+            array[idx], array[idx+1] = array[idx+1], array[idx]
+            swaps += 1
+            sorted = false
+          end
+          idx += 1
+        end
+    end
+  p swaps
+  array
+end
+
+# p bubblesort([1,2,3,1])
