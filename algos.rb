@@ -317,3 +317,45 @@ def bubblesort(array)
 end
 
 # p bubblesort([1,2,3,1])
+
+
+
+
+
+# You are given a string of numbers between 0-9. Find the average of these numbers and
+# return it as a floored whole number (ie: no decimal places) written out as a string. Eg:
+# "zero nine five two" -> "four"
+def average_string(s)
+  return 'n/a' if s == ''
+  values = {
+    'zero' => 0,
+    'one' => 1,
+    'two' => 2,
+    'three' => 3,
+    'four' => 4,
+    'five' => 5,
+    'six' => 6,
+    'seven' => 7,
+    'eight' => 8,
+    'nine' => 9
+  }
+
+  sum = 0
+  nums = s.split(' ')
+
+  nums.each do |num|
+    return 'n/a' unless values[num]
+    sum += values[num]
+  end
+
+  values.key(sum/nums.length)
+end
+
+
+
+
+
+# Write a function that will return the count of distinct case-insensitive
+# alphabetic characters and numeric digits that occur more than once in the input 
+# string. The input string can be assumed to contain only alphabets
+# (both uppercase and lowercase) and numeric digits.
