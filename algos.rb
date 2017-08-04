@@ -225,7 +225,7 @@ def average_of_levels(root)
 end
 
 def average(node, level, res_of_nodelvl, count_of_nodelvl)
-  # pass in same level count to children of same node which adds sum and # of nodes in parent function's count/res 
+  # pass in same level count to children of same node which adds sum and # of nodes in parent function's count/res
   return if node == nil
   res_of_nodelvl[level] ? res_of_nodelvl[level] += node.val : res_of_nodelvl[level] = node.val
   count_of_nodelvl[level] ? count_of_nodelvl[level] += 1 : count_of_nodelvl[level] = 1
@@ -233,3 +233,27 @@ def average(node, level, res_of_nodelvl, count_of_nodelvl)
   average(node.left, level + 1, res_of_nodelvl, count_of_nodelvl)
   average(node.right, level + 1, res_of_nodelvl, count_of_nodelvl)
 end
+
+
+
+
+
+# Given the words in the magazine and the words in the ransom note, print Yes if he can
+# replicate his ransom note exactly using whole words from the magazine; otherwise, print No.
+def enough_words?(magazine, ransom)
+  magazine_words = {}
+  ransom_words = {}
+
+  magazine.each { |word| magazine_words[word] ? magazine_words[word] += 1 : magazine_words[word] = 1}
+  ransom.each { |word| ransom_words[word] ? ransom_words[word] += 1 : ransom_words[word] = 1}
+
+  ransom_words.each do |word, reps|
+     if !magazine_words[word] || magazine_words[word] <  reps
+         return 'No'
+     end
+  end
+
+  'Yes'
+end
+
+p enough_words?(['hello', 'how', 'are', 'you'], ['hello', 'you'])
