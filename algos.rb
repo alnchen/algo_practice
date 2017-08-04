@@ -183,4 +183,28 @@ end
 # the minimum number of character deletions required to make  and  anagrams. Any
 # characters can be deleted from either of the strings.
 def min_deletions(str1, str2)
+  a_hash = {}
+  b_hash = {}
+
+  str1.split('').each { |ltr| a_hash[ltr] ? a_hash[ltr] += 1 : a_hash[ltr] = 1}
+  str2.split('').each { |ltr| b_hash[ltr] ? b_hash[ltr] += 1 : b_hash[ltr] = 1}
+
+  diff = 0
+  a_hash.each do |ltr, amt|
+      if b_hash[ltr]
+          diff += (amt - b_hash[ltr]).abs
+      else
+          diff += amt
+      end
+  end
+
+  b_hash.each do |ltr, amt|
+      unless a_hash[ltr]
+          diff += amt
+      end
+  end
+
+  diff
 end
+
+p min_deletions('hello', 'lol')
