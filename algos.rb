@@ -299,10 +299,19 @@ end
 def bubblesort(array)
   swaps = 0
   sorted = false
-
-    until sorted 
+  length = array.length
+    until sorted
+        sorted = true
         idx = 0
-
+        while idx < length - 1
+          if array[idx] < array[idx +1]
+            array[idx], array[idx+1] = array[idx+1], array[idx]
+            swaps += 1
+            sorted = false
+          end
+          idx += 1
+        end
     end
-
+  p swaps
+  array
 end
