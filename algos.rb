@@ -356,6 +356,77 @@ end
 
 
 # Write a function that will return the count of distinct case-insensitive
-# alphabetic characters and numeric digits that occur more than once in the input 
+# alphabetic characters and numeric digits that occur more than once in the input
 # string. The input string can be assumed to contain only alphabets
 # (both uppercase and lowercase) and numeric digits.
+def duplicate_count(text)
+    hash = {}
+    chars = text.split('')
+
+    chars.each do |char|
+      if hash[char.downcase]
+        hash[char.downcase] += 1
+      else
+        hash[char.downcase] = 1
+      end
+    end
+
+    hash.count { |char, amt| amt > 1 }
+end
+
+
+
+# Here are some children, each with a certain number of apples. Now we
+# have to do something to make the number of apples of each child are equal.
+def min_steps(apples)
+  return 0 if apples.max == apples.min
+  avg = apples.reduce(:+) / apples.size.to_f
+  r = apples.map {|x| x - avg}
+  return -1 unless r.all? {|i| i % 2 == 0}
+  r.select {|z| z > 0}.reduce(:+) / 2
+end
+
+
+
+
+
+# Your task in this kata is to implement a function that, given a list of
+# pepes (pepes), returns the rarest pepe in the list. If two or more pepes are
+# equally rare, return a list of these pepes, sorted in alphabetical order.
+def find_rarest_pepe(pepes)
+  counts = {}
+  pepes.each { |pepe| counts[pepe] ? counts[pepe] += 1 : counts[pepe] = 1 }
+  return 'No rare pepes!' if counts.values.uniq.length == 1 || pepes.empty?
+  min = counts.values.min
+  output = counts.select { |pepe, count| count == min }.keys
+  output.length == 1 ? output[0] : output.sort
+end
+
+pepes = ['Donald Trump Pepe',
+           'Melania Trump Pepe',
+           'Clown Pepe',
+           'Clown Pepe',
+           'Donald Trump Pepe']
+
+# p find_rarest_pepe(pepes)
+
+
+
+
+# custom fibs
+# given signature (starting seq and also length = prev window range)
+# indexes = indices of nums to sum up within the prev window range
+# n = return index 
+
+def custom_fib(signature,indexes,n)
+  length = signature.length
+
+  while signature.length <= n
+    cur_val = 0
+    cur_window = signature[-length..-1]
+    indexes.each { |idx| cur_val += cur_window[idx] }
+    signature.push(cur_val)
+  end
+
+  signature[n]
+end
