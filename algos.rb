@@ -469,3 +469,52 @@ e.trigger('foo')
 # => 'foo'
 # => 'bar'
 # => 'baz'
+
+
+
+
+
+# Your task is to create a function deepCount that returns the number of
+# ALL elements within an array, including any within inner-level arrays.
+def deep_count(a)
+  sum = 0
+  a.each { |el| el.is_a?(Array) ? sum += 1 + deep_count(el) : sum += 1 }
+  sum
+end
+
+
+
+# alternate vowels?
+def is_alt(s)
+  chars = s.split('')
+  vowels = 'aeiou'
+  odds = []
+  evens = []
+  chars.each_with_index do |ltr, idx|
+    idx % 2 == 0 ? evens << ltr : odds << ltr
+  end
+
+  if odds.all? { |ltr| vowels.include?(ltr) } && evens.none? { |ltr| vowels.include?(ltr) }
+    return true
+  elsif
+    odds.none? { |ltr| vowels.include?(ltr) } && evens.all? { |ltr| vowels.include?(ltr) }
+    return true
+  end
+
+  false
+end
+
+
+# You have to sort the inner content of every word of a string in descending order.
+# The inner content is the content of a word without first and the last char.
+def sort_the_inner_content(words)
+  split = words.split(' ')
+  split.map { |word| encode(word) }.join(' ')
+end
+
+# helper method
+def encode(word)
+  return word if word.length <= 2
+  mid = word[1..-2].split('').sort { |a,b| b <=> a }.join('')
+  word[0] + mid + word[-1]
+end
