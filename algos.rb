@@ -217,3 +217,19 @@ end
 #     /  \
 #    15   7
 # Output: [3, 14.5, 11]
+def average_of_levels(root)
+    count = []
+    res = []
+    average(root, 0, res, count)
+end
+
+def average(node, level, res_of_nodelvl, count_of_nodelvl)
+    res_of_nodelvl[level] ? res_of_nodelvl[level] += node.val : res_of_nodelvl[level] = node.val
+    count_of_nodelvl[level] ? count_of_nodelvl[level] += 1 : count_of_nodelvl[level] = 1
+
+    if node.left
+        average(node.left, level + 1, res_of_nodelvl, count_of_nodelvl)
+    elsif node.right
+        average(node.right, level + 1, res_of_nodelvl, count_of_nodelvl)
+    end
+end
