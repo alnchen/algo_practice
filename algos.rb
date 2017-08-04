@@ -183,6 +183,7 @@ end
 # the minimum number of character deletions required to make  and  anagrams. Any
 # characters can be deleted from either of the strings.
 def min_deletions(str1, str2)
+  # make hashes of the number of letters in each string and get total difference
   a_hash = {}
   b_hash = {}
   diff = 0
@@ -198,3 +199,21 @@ def min_deletions(str1, str2)
 end
 
 # p min_deletions('hello', 'lol')
+
+
+
+
+#binary tree
+#traversing (in-order, pre-order, post-order)
+# in-order: left, root, right
+# pre-order: root, left, right
+# post-order: left, right, root
+
+# Given a non-empty binary tree, return the average value of the nodes on each level in the form of an array.
+# Input:
+#     3
+#    / \
+#   9  20
+#     /  \
+#    15   7
+# Output: [3, 14.5, 11]
