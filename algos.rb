@@ -256,4 +256,12 @@ def enough_words?(magazine, ransom)
   'Yes'
 end
 
-p enough_words?(['hello', 'how', 'are', 'you'], ['hello', 'you'])
+# p enough_words?(['hello', 'how', 'are', 'you'], ['hello', 'you'])
+
+
+
+
+# Given  strings of brackets, determine whether each sequence of brackets is balanced.
+# If a string is balanced, print YES on a new line; otherwise, print NO on a new line.
+def balanced_brackets(str)
+end
