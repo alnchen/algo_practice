@@ -297,5 +297,12 @@ end
 
 # bubblesort
 def bubblesort(array)
-  
+  swaps = 0
+  sorted = false
+
+    until sorted 
+        idx = 0
+
+    end
+
 end
