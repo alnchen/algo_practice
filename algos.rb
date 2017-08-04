@@ -263,5 +263,27 @@ end
 
 # Given  strings of brackets, determine whether each sequence of brackets is balanced.
 # If a string is balanced, print YES on a new line; otherwise, print NO on a new line.
-def balanced_brackets(str)
+def check(str)
+  stack = []
+  brackets = {
+      '(' => ')',
+      '[' => ']',
+      '{' => '}'
+      }
+
+  str.strip.split('').each do |char|
+      if brackets.keys.include?(char)
+          stack.push(char)
+      elsif brackets.values.include?(char)
+          if stack.last != brackets.key(char)
+              return false
+          else
+              stack.pop
+          end
+      else
+          next
+      end
+  end
+
+  stack.empty? ? true : false
 end
