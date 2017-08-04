@@ -176,3 +176,11 @@ def rotate(ints, n)
 end
 
 # p rotate([1,2,3,4,5], 2)
+
+
+
+# Given two strings,  and , that may or may not be of the same length, determine
+# the minimum number of character deletions required to make  and  anagrams. Any
+# characters can be deleted from either of the strings.
+def min_deletions(str1, str2)
+end
