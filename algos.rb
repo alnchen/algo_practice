@@ -459,16 +459,13 @@ class EventEmitter
   end
 end
 
-e = EventEmitter.new
-
-e.on('foo') { puts 'foo' }
-e.on('foo') { puts 'bar' }
-e.on('foo') { puts 'baz' }
-
-e.trigger('foo')
-# => 'foo'
-# => 'bar'
-# => 'baz'
+# e = EventEmitter.new
+#
+# e.on('foo') { puts 'foo' }
+# e.on('foo') { puts 'bar' }
+# e.on('foo') { puts 'baz' }
+#
+# e.trigger('foo')
 
 
 
@@ -518,3 +515,71 @@ def encode(word)
   mid = word[1..-2].split('').sort { |a,b| b <=> a }.join('')
   word[0] + mid + word[-1]
 end
+
+
+
+
+
+
+# We will write a function step with parameters:
+#
+# g (integer >= 2) which indicates the step we are looking for,
+# m (integer >= 2) which gives the start of the search (m inclusive),
+# n (integer >= m) which gives the end of the search (n inclusive)
+# In the example above step(2, 2, 50) will return [3, 5] which is the
+# first pair between 2 and 50 with a 2-steps.
+def step(g, m, n)
+  prev_primes = {}
+
+  (m..n).each do |num|
+    if prime?(num)
+      prev_num = num - g
+      return [prev_num, num] if prev_primes[prev_num]
+      prev_primes[num] = 'yes'
+    end
+  end
+  nil
+end
+
+def prime?(num)
+  (2..Math.sqrt(num)).none? { |i| num % i == 0 }
+end
+
+
+
+
+
+
+# array duplicate practice in O(n)
+def dupes_On(arr)
+  i = 0
+  while i < arr.length
+    if arr[i] <= 0
+      i += 1
+    else
+      element_index = arr[i] - 1
+      if arr[element_index] > 0
+        arr[i] = arr[element_index]
+        arr[element_index] = -1
+      else
+        arr[element_index] -= 1
+        arr[i] = 0
+      end
+    end
+  end
+  output = []
+  arr.each_with_index do |count, idx|
+    output << (idx + 1) if count < -1
+  end
+  output
+end
+
+
+
+# p dupes_On([3,5,3,2,1])
+# => [-1,-1,-2,0,1]
+
+# p dupes_On([6,4,2,5,3,1,3,9,8])
+# => [-1,-1,-2,-1,-1,-1,0,-1,-1]
+
+p dupes_On([4,3,2,7,8,2,3,1])
