@@ -583,3 +583,20 @@ end
 # => [-1,-1,-2,-1,-1,-1,0,-1,-1]
 
 p dupes_On([4,3,2,7,8,2,3,1])
+
+
+
+
+
+
+
+
+# hackerrank test by IXL Learning
+def getMinimumDifference(a,b)
+  return -1 unless a.length == b.length
+
+  a_split = a.chars
+  b_split = b.chars
+
+  # count = a.length - a_split.select { |ltr| a_split.count(ltr) == b_split.count(ltr) }
+end
