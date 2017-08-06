@@ -582,7 +582,7 @@ end
 # p dupes_On([6,4,2,5,3,1,3,9,8])
 # => [-1,-1,-2,-1,-1,-1,0,-1,-1]
 
-p dupes_On([4,3,2,7,8,2,3,1])
+# p dupes_On([4,3,2,7,8,2,3,1])
 
 
 
@@ -599,4 +599,38 @@ def getMinimumDifference(a,b)
   b_split = b.chars
 
   # count = a.length - a_split.select { |ltr| a_split.count(ltr) == b_split.count(ltr) }
+end
+
+
+
+
+
+# A sequence of number is called arithmetic if it consists of at least
+# three elements and if the difference between any two consecutive elements is the same.
+# A = [1, 2, 3, 4]
+# return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
+
+def number_of_arithmetic_slices(a)
+    count = 0
+    a.length.times do |idx1|
+       idx2 = idx1 + 2
+       while idx2 < a.length
+           count += 1 if arithmetic?(a[idx1..idx2])
+           idx2 += 1
+       end
+    end
+    count
+end
+
+# helpermethod
+def arithmetic?(arr)
+    diff = arr[1] - arr[0]
+    idx = 0
+
+    while idx <= arr.length - 2
+        return false unless arr[idx+1] - arr[idx] == diff
+        idx += 1
+    end
+
+    true
 end
