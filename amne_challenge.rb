@@ -64,27 +64,47 @@ Javascript, please send it with a .txt extension (instead of .js).
 
 def subrange_difference(txt_data)
   parsed_data = File.readlines(txt_data).map { |line| line.chomp }
-  p parsed_data
   length = parsed_data[0].split(' ')[0].to_i
-  window = parsed_data[0].split(' ')[1].to_i
+  window_size = parsed_data[0].split(' ')[1].to_i
   # p window
   # p window.is_a?(Integer)
   price_data = parsed_data[1].split(' ').map { |price| price.to_i }
 
-  length.times do |idx|
-    idx2 = idx + 2
-
-    while idx2 < length
-
-      idx2 += 1
-    end
+  (length - window_size + 1).times do |idx|
+    p window_calculation(price_data[idx, window_size], window_size)
   end
 
 end
 
-def window_calculation(window)
+def window_calculation(set, size)
+  res = 0
 
+  idx = 0
+  while idx < size - 1
+    idx2 = idx + 1
+
+    while idx2 < size
+      subrange = set[idx..idx2]
+      increasing?(subrange) ? res += 1 : (res -= 1 if decreasing?(subrange))
+      idx2 += 1
+    end
+
+    idx += 1
+  end
+  res
 end
+
+def increasing?(arr)
+  (arr.length - 1).times { |idx| return false unless arr[idx] < arr[idx + 1] }
+  true
+end
+
+def decreasing?(arr)
+  (arr.length - 1).times { |idx| return false unless arr[idx] > arr[idx + 1] }
+  true
+end
+
+
 
 # testing .txt file input and render
 file = 'amne.txt'
