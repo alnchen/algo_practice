@@ -63,34 +63,54 @@ Javascript, please send it with a .txt extension (instead of .js).
 
 
 def subrange_difference(txt_data)
+  # extract data from file
   parsed_data = File.readlines(txt_data).map { |line| line.chomp }
+
+  # assign corresponding data to reference-named variables
   length = parsed_data[0].split(' ')[0].to_i
   window_size = parsed_data[0].split(' ')[1].to_i
-  # p window
-  # p window.is_a?(Integer)
   price_data = parsed_data[1].split(' ').map { |price| price.to_i }
 
+  # not needed based on instructions but utilized in RSpec testing
+  output = []
+
+  # check each window and print the correct value to the console
   (length - window_size + 1).times do |idx|
-    p window_calculation(price_data[idx, window_size], window_size)
+
+    # use helper method to score current window range
+    res =  window_calculation(price_data[idx, window_size], window_size)
+    p res
+    output << res
   end
 
+  # return values as an array for RSpec testing
+  output
 end
 
+
+
+# helper method for calculating window ranges
 def window_calculation(set, size)
   res = 0
 
-  idx = 0
-  while idx < size - 1
+  # analyzing subranges of all sizes until we hit last value
+  (size - 1).times do |idx|
     idx2 = idx + 1
 
     while idx2 < size
       subrange = set[idx..idx2]
+
+      # check if current range is increasing throughout subrange. if so,
+      # increase res by 1, if not, check if decreasing throughout and decrease by 1
+      # if neither, do nothing and move on by increasing ending index value (idx2)
+      # by 1 to analyze larger subrange. accomplished using the ternary operator below
       increasing?(subrange) ? res += 1 : (res -= 1 if decreasing?(subrange))
       idx2 += 1
     end
 
-    idx += 1
   end
+
+  # return current window score to parent function
   res
 end
 
@@ -104,8 +124,4 @@ def decreasing?(arr)
   true
 end
 
-
-
 # testing .txt file input and render
-file = 'amne.txt'
-subrange_difference(file)
