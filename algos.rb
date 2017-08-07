@@ -644,3 +644,58 @@ end
 # Output: 2
 # Input: [3,3,7,7,10,11,11]
 # Output: 10
+def single_non_duplicate(nums)
+  return nums[0] if nums.length == 1
+  return 'no single' if nums.length == 0
+  mid = nums.length/2
+
+  # check for whether middle index is even or odd because of pattern of pairing
+
+  if mid%2 == 0
+      if nums[mid] == nums[mid+1]
+          return single_non_duplicate(nums[mid+2..-1])
+      else
+          return single_non_duplicate(nums[0..mid])
+      end
+  else
+      if nums[mid] == nums[mid-1]
+          return single_non_duplicate(nums[mid+1..-1])
+      else
+          return single_non_duplicate(nums[0..mid-1])
+      end
+  end
+
+  'no single'
+end
+
+# p single_non_duplicate([2,2,4,4,6,6,7,8,8])
+
+
+
+
+
+
+
+# Suppose you have N integers from 1 to N. We define a beautiful arrangement
+# as an array that is constructed by these N numbers successfully if one of the
+# following is true for the ith position (1 ? i ? N) in this array:
+#
+# The number at the ith position is divisible by i.
+# i is divisible by the number at the ith position.
+#
+# Now given N, how many beautiful arrangements can you construct?
+def count_arrangement(n)
+    combos = (1..n).to_a.permutation.to_a
+    count = 0
+    combos.each do |set|
+        count += 1 if beautiful_array?(set)
+    end
+    count
+end
+
+def beautiful_array?(arr)
+    arr.each_with_index do |val, idx|
+        return false unless val%(idx+1) == 0 || (idx+1)%val == 0
+    end
+    true
+end
