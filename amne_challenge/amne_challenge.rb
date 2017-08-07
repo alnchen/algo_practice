@@ -70,19 +70,17 @@ def subrange_difference(txt_data)
   length = parsed_data[0].split(' ')[0].to_i
   window_size = parsed_data[0].split(' ')[1].to_i
   price_data = parsed_data[1].split(' ').map { |price| price.to_i }
-
-  # not needed based on instructions but utilized in RSpec testing
+  # output array not needed based on instructions but utilized in RSpec testing
   output = []
 
   # check each window and print the correct value to the console
   (length - window_size + 1).times do |idx|
-
     # use helper method to score current window range
     res =  window_calculation(price_data[idx, window_size], window_size)
     p res
     output << res
   end
-
+  
   # return values as an array for RSpec testing
   output
 end
@@ -107,13 +105,14 @@ def window_calculation(set, size)
       increasing?(subrange) ? res += 1 : (res -= 1 if decreasing?(subrange))
       idx2 += 1
     end
-
   end
-
   # return current window score to parent function
   res
 end
 
+
+
+# helper methods to check weather current range is either increasing or decreasing
 def increasing?(arr)
   (arr.length - 1).times { |idx| return false unless arr[idx] < arr[idx + 1] }
   true
@@ -123,5 +122,3 @@ def decreasing?(arr)
   (arr.length - 1).times { |idx| return false unless arr[idx] > arr[idx + 1] }
   true
 end
-
-# testing .txt file input and render
