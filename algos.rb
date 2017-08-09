@@ -760,3 +760,55 @@ def circle_path?(str)
             end
         end
     end
+end
+
+
+
+
+
+
+
+
+# airbnb challenge print spiral 2d array values
+# 1, 2, 3
+# 4, 5, 6
+# 7, 8, 9
+# => 1, 2, 3, 6, 9, 8, 7, 4, 5, 6
+def spiral_print()
+  data = gets.chomp.split(',').map { |el| el.to_i }
+  rows = data[0]
+  cols = data[1]
+  visited = {}
+  arr = []
+
+  rows.times do |row|
+      cur_row = gets.chomp.split(',')
+      arr.push(cur_row)
+      p cur_row
+  end
+
+  cur_location = [0, 0]
+
+  right = true
+  down = true
+
+  loop do
+      cols.times do
+          right ? cur_location[1] += 1 : cur_location[1] -= 1
+          break if visited[cur_location]
+          visited[cur_location] = true
+          p cur_location
+      end
+
+      cols -= 1
+
+      rows.times do
+          down ? cur_location[0] += 1 : cur_location[0] -= 1
+          break if visited[cur_location]
+          visited[cur_location] = true
+          p cur_location
+      end
+
+      rows -= 1
+  end
+end
