@@ -699,3 +699,64 @@ def beautiful_array?(arr)
     end
     true
 end
+
+
+
+
+
+
+
+# G moves robot forward. L turns left. R turns right. Will Robot make a complete circle?
+# 'GRGL' => 'NO'
+# 'L' => 'YES'
+def doesCircleExist(commands)
+    commands.map { |command| circle_path?(command) ? 'YES' : 'NO'}
+end
+
+def circle_path?(str)
+    directions = ['right', 'down', 'left', 'up']
+
+    start_location = [0, 0]
+    cur_location = [0, 0]
+    cur_direction = directions[0]
+
+    4.times do
+        str.chars.each do |command|
+            if command == 'G'
+                case cur_direction
+                    when 'right'
+                        cur_location[1] += 1
+                    when 'down'
+                        cur_location[0] += 1
+                    when 'left'
+                        cur_location[1] -= 1
+                    when 'up'
+                        cur_location[0] -= 1
+                end
+            else
+                if command == 'R'
+                    case cur_direction
+                        when 'right'
+                            cur_direction = 'down'
+                        when 'down'
+                            cur_direction = 'left'
+                        when 'left'
+                            cur_direction = 'up'
+                        when 'up'
+                            cur_direction = 'right'
+                    end
+                else
+                    case cur_direction
+                        when 'right'
+                            cur_direction = 'up'
+                        when 'down'
+                            cur_direction = 'right'
+                        when 'left'
+                            cur_direction = 'down'
+                        when 'up'
+                            cur_direction = 'left'
+                    end
+                end
+            end
+        end
+    end
