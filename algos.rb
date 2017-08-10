@@ -876,4 +876,24 @@ def make_better_change(amt, coins)
   best_change
 end
 
-p make_better_change(price, weird_coins)
+# p make_better_change(price, weird_coins)
+
+
+
+
+
+
+# taking steps
+# n actions (n = 3 => 1, 2, 3)
+# cannot land on k
+# each action either takes n steps or stays
+# how far can you go?
+def maxStep(n, k, cur_action=1, step=0)
+    return step if cur_action > n
+    return (maxStep(n, k, cur_action + 1, step)) if step + cur_action == k
+
+    take_step = maxStep(n, k, cur_action + 1, step + cur_action )
+    stay = maxStep(n, k, cur_action + 1, step)
+
+    return take_step > stay ? take_step : stay
+end
