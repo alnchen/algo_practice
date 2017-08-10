@@ -799,7 +799,7 @@ def spiral_print()
           visited[cur_location] = true
           p cur_location
       end
-
+      right = down ? false : true
       cols -= 1
 
       rows.times do
@@ -808,7 +808,72 @@ def spiral_print()
           visited[cur_location] = true
           p cur_location
       end
-
+      down = down ? false : true
       rows -= 1
   end
 end
+
+
+
+
+
+
+
+# makechange
+price = 46
+us_coins = [25, 10, 5, 1]
+weird_coins  = [100, 50, 10, 7, 1]
+
+def make_change(amt, coins)
+  return [] if coins.empty?
+  cur_set = []
+
+  while amt >= coins[0]
+    cur_set << coins[0]
+    amt -= coins[0]
+  end
+
+  cur_set += make_change(amt, coins[1..-1])
+end
+
+# p make_change(price, us_coins)
+# p make_change(price, weird_coins)
+
+
+# Iterate over each coin.
+# Grab only one of that one coin and recursively call make_better_change
+# on the remainder using coins less than or equal to the current coin.
+# Add the the single coin to the change returned by the recursive call.
+# This will be a possible solution, but maybe not the best one.
+# Keep track of the best solution and return it at the end.
+
+def make_better_change(amt, coins)
+  return [] if amt == 0
+  # if there are no coin values less than the amt needed
+  return nil if coins.none? { |coin| coin <= amt }
+
+  best_change = nil
+  # take out just one of the largest coin and recursively find the rest of the possible combinations
+  coins.each do |coin|
+    rest_of_change = make_better_change((amt - coin), coins.select { |el| el <= coin })
+
+    # We may not be able to make the remaining amount of change (e.g.,
+    # if coins doesn't have a 1cent piece), in which case we shouldn't
+    # use this coin.
+    # aka if the smallest coin we have is still larger than the remaining
+    # amt we have (return nil if coins.none? { |coin| coin <= amt } will kick in)
+    next if rest_of_change.nil?
+
+    cur_change = [coin] + rest_of_change
+
+    if best_change.nil?
+      best_change = cur_change
+    else
+      best_change = best_change.length > cur_change.length ? cur_change : best_change
+    end
+  end
+
+  best_change
+end
+
+p make_better_change(price, weird_coins)
