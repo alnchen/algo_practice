@@ -890,10 +890,71 @@ end
 # how far can you go?
 def maxStep(n, k, cur_action=1, step=0)
     return step if cur_action > n
-    return (maxStep(n, k, cur_action + 1, step)) if step + cur_action == k
+    return maxStep(n, k, cur_action + 1, step + cur_action) if step > k
+    return maxStep(n, k, cur_action + 1, step) if step + cur_action == k
 
     take_step = maxStep(n, k, cur_action + 1, step + cur_action )
     stay = maxStep(n, k, cur_action + 1, step)
 
     return take_step > stay ? take_step : stay
+end
+
+# p maxStep(300, 3)
+
+
+
+# A queue is an abstract data type that maintains the order in which elements
+# were added to it, allowing the oldest elements to be removed from the front
+# and new elements to be added to the rear. This is called a First-In-First-Out (FIFO)
+# data structure because the first element added to the queue (i.e., the one that has
+# been waiting the longest) is always the first one to be removed.
+
+# A basic queue has the following operations:
+#
+# Enqueue: add a new element to the end of the queue.
+# Dequeue: remove the element from the front of the queue and return it.
+# In this challenge, you must first implement a queue using two stacks. Then
+# process  queries, where each query is one of the following  types:
+#
+# 1 x: Enqueue element  into the end of the queue.
+# 2: Dequeue the element at the front of the queue.
+# 3: Print the element at the front of the queue.
+
+
+# sample input:
+# 10
+# 1 42
+# 2
+# 1 14
+# 3
+# 1 28
+# 3
+# 1 60
+# 1 78
+# 2
+# 2
+
+# sample output:
+# 14
+# 14
+
+def queue_stacks()
+  queue = []
+  buffer = []
+  num_q = gets.chomp.to_i
+
+  num_q.times do
+    action = gets.chomp.split(' ')
+    if action[0] == '1'
+      queue.push(action[1])
+    elsif action[0] == '2'
+      until queue.empty?
+        buffer.push(queue.pop)
+        buffer.pop
+        queue.push(buffer.pop) until queue.empty?
+      end
+    else
+      p queue[0].to_i
+    end
+  end
 end
