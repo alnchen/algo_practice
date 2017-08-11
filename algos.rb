@@ -951,7 +951,7 @@ def queue_stacks()
       until queue.empty?
         buffer.push(queue.pop)
         buffer.pop
-        queue.push(buffer.pop) until queue.empty?
+        queue.push(buffer.pop) until buffer.empty?
       end
     else
       p queue[0].to_i
