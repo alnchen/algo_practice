@@ -958,3 +958,61 @@ def queue_stacks()
     end
   end
 end
+
+
+
+
+# Given an 2D board, count how many battleships are in it. The
+# battleships are represented with 'X's, empty slots are represented with
+# '.'s. You may assume the following rules:
+#
+# You receive a valid board, made of only battleships or empty slots.
+# Battleships can only be placed horizontally or vertically.
+# In other words, they can only be made of the shape 1xN (1 row, N columns)
+# or Nx1 (N rows, 1 column), where N can be of any size.
+# At least one horizontal or vertical cell separates between two
+# battleships - there are no adjacent battleships.
+
+
+
+#
+def count_battleships(board)
+    count = 0
+    cols = board[0].length
+    rows = board.length
+    cur_row = 0
+    ship_spots = {}
+
+    while cur_row < rows
+        cur_col = 0
+            while cur_col < cols
+                if board[cur_row][cur_col] == 'X' && !ship_spots[[cur_row, cur_col]]
+                    if board[cur_row][cur_col + 1] == 'X'
+                        consec_col = cur_col.to_i
+                        until consec_col >= cols || board[cur_row][consec_col] != 'X'
+                            ship_spots[[cur_row, consec_col]] = true
+                            consec_col += 1
+                        end
+                    elsif cur_row >= rows - 1 || board[cur_row + 1][cur_col] == 'X'
+                        consec_row = cur_row.to_i
+                        until consec_row >= rows || board[consec_row][cur_col] != 'X'
+                            ship_spots[[consec_row, cur_col]] = true
+                            consec_row += 1
+                        end
+                    end
+                    count += 1
+                end
+                cur_col += 1
+            end
+        cur_row += 1
+    end
+
+    count
+end
+
+
+
+
+# host crowding problem
+# array of strings
+# 1,28,108.4,Dallas
