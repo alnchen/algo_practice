@@ -1016,3 +1016,35 @@ end
 # host crowding problem
 # array of strings
 # 1,28,108.4,Dallas
+
+
+
+
+
+
+# Your goal is to create a function to format a number given a template;
+# if the number is not present, use the digits 1234567890 to fill in the spaces.
+
+# A few rules:
+# the template might consist of other numbers, special characters or the like:
+# you need to replace only alphabetical characters (both lower- and uppercase);
+# if the given or default string representing the number is shorter than the
+#   template, just repeat it to fill all the spaces.
+
+
+def numeric_formatter(form, numbers=nil)
+  numbers ? count = 0 : count = 1
+  form_arr = form.split('')
+  for x in 0...form_arr.length do
+    if form_arr[x] =~ /[A-Za-z]/
+      if numbers
+        form_arr[x] = numbers[count]
+        count < (numbers.length - 1) ? count += 1 : count = 0
+      else
+        form_arr[x] = count
+        count < 9 ? count += 1 : count = 0
+      end
+    end
+  end
+  form_arr.join('')
+end
