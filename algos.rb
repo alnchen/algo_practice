@@ -1048,3 +1048,134 @@ def numeric_formatter(form, numbers=nil)
   end
   form_arr.join('')
 end
+
+
+
+
+
+
+# #Task: Given an integer k and a list arr of positive integers the function
+# consec_kprimes (or its variants in other languages) returns how many times in
+# the sequence arr numbers come up twice in a row with exactly k prime factors?
+
+def prime_decomp(n)
+out = []
+idx = 2
+  while true
+    return out.length if n == 1
+    if n % idx == 0
+      out += [idx]
+      n = n/idx
+    else
+      idx += 1
+    end
+  end
+end
+
+def consec_kprimes(k, arr)
+  count = 0
+   (0..arr.length-2).each do |idx|
+     if prime_decomp(arr[idx]) == k && prime_decomp(arr[idx+1]) == k
+       count+=1
+     end
+   end
+   count
+end
+
+
+
+
+# Add two English words together!
+#
+# Implement a class Arith such that:
+# var k = new Arith("three");
+# k.add("one hundred and two"); //this should return "one hundred and five"
+#
+# Input - Will be between zero and five hundred and will always be in lower case.
+# This input range applies to both the initial value upon object instantiation
+# as well as the input for the add method.
+#
+# Output - Word representation of the result of the addition. Should be in lower case
+#
+# Word format - Both input and output shall be in the format 123 = one hundred
+# and twenty three. No hyphen is needed in numbers 21-99. Words should also
+# be separated with one space and no space padding is allowed.
+
+$d = {
+    "zero" => 0,
+    "one" => 1,
+    "two" => 2,
+    "three" => 3,
+    "four" => 4,
+    "five" => 5,
+    "six" => 6,
+    "seven" => 7,
+    "eight" => 8,
+    "nine" => 9,
+    "ten" => 10,
+    "eleven" => 11,
+    "twelve" => 12,
+    "thirteen" => 13,
+    "fourteen" => 14,
+    "fifteen" => 15,
+    "sixteen" => 16,
+    "seventeen" => 17,
+    "eighteen" => 18,
+    "nineteen" => 19,
+    "twenty" => 20,
+    "thirty" => 30,
+    "forty" => 40,
+    "fifty" => 50,
+    "sixty" => 60,
+    "seventy" => 70,
+    "eighty" => 80,
+    "ninety" => 90,
+    "hundred" => 100,
+    "thousand" => 1000,
+}
+$d2 = Hash[$d.to_a.map(&:reverse)]
+
+class Arith
+  def initialize( s )
+      @num = self.str2num( s )
+  end
+
+  def str2num( s )
+    if s.include?("hundred") then
+      s.sub!(/\s+and\s+/, ' ')
+      u = s.split(/\s/)
+      h = u[0..1]
+      r = u[2..-1]
+      h = $d[ h[0].chomp ] * $d[ h[1].chomp ]
+      r = r.map{|x| $d[ x.chomp ]}.compact.inject(:+) rescue 0
+      if r.nil? then r = 0 end
+      return h + r
+    else
+      r = s.split(/\s/)
+      return r.map{ |x| $d[ x.chomp ] }.compact.inject(0) { |a,b| a+b }
+    end
+  end
+
+  def num2str( n )
+    return "one " + $d2[ n ] if n == 1000
+
+    if n < 20 then
+      return $d2[ n ]
+    end
+
+    if n < 100 then
+      d = n / 10
+      n = n % 10
+      return ($d2[ d * 10 ] + " " + num2str( n ).sub(/zero$/, '')).chomp
+    end
+
+    h = n / 100
+    n = n % 100
+    
+    return ($d2[ h ] + " hundred and " + num2str( n )).sub(' and zero', '').chomp
+  end
+
+  def add( s )
+    return num2str( @num + self.str2num( s ) ).rstrip
+  end
+end
