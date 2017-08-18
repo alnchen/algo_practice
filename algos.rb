@@ -1220,3 +1220,40 @@ def page_ordering(items_per_page, items)
 
   res.each { |set| p set }
 end
+
+
+def page_ordering(items_per_page, items)
+  stack = []
+  set = []
+  res = []
+  items.map! { |item| item.split(',')}
+
+  until items.empty?
+    item = items[0]
+
+    if stack.none? { |stored_item| stored_item[0] == item[0] }
+      set.push(items.shift)
+      items.unshift(stack.pop) until stack.empty?
+    else
+      stack.push(items.shift)
+    end
+
+    if set.length == items_per_page
+      res.push(set)
+      set = []
+    end
+  end
+
+  until stack.empty?
+    set.push(stack.pop)
+
+    if set.length == items_per_page
+      res.push(set)
+      set = []
+    end
+  end
+
+  res.push(set) unless set.empty?
+
+  res.each { |set| p set }
+end
