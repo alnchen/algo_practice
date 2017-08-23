@@ -1023,71 +1023,212 @@ def page_ordering(items_per_page, items)
   items.map! { |item| item.split(',')}
 
   until items.empty?
-    item = items[0]
+    item = items.shift
 
-    if stack.none? { |stored_item| stored_item[0] == item[0] }
-      set.push(items.shift)
+  # check if item is already in the "set"
+    if set.none? { |stored_item| stored_item[0] == item[0] }
+      set.push(item)
       items.unshift(stack.pop) until stack.empty?
     else
-      stack.push(items.shift)
+      stack.push(item)
     end
 
+  # check whether set length is filled
     if set.length == items_per_page
       res.push(set)
       set = []
     end
   end
 
+  # any remaining items in the stack that was not popped out
   until stack.empty?
-    set.push(stack.pop)
+    set.push(stack.shift)
 
+  # fill in sets of equal page length with the items in the stack
     if set.length == items_per_page
       res.push(set)
       set = []
     end
   end
 
+  # push in any items left in set because it did not hit items_per_page condition
   res.push(set) unless set.empty?
 
-  res.each { |set| p set }
+  # show results
+  res.each_with_index do |set, page|
+    set.each do |item|
+      p item
+    end
+    p "Page #{page + 1}"
+  end
 end
 
+# time complexity notes
+# O(1) Pushing and Poping on Stack
 
 
-# linked list algo
-def linked_element?(node)
+list1 = [
+  "1,28,100,Rome",
+  "1,24,67,San Francisco",
+  "1,34,236,Los Angeles",
+  "1,3,124,Disneyland",
+  "1,865,335,Brazil",
+  "1,45,57,San Mateo",
+  "1,12,236,Daly City",
+  "1,41,789,San Bruno",
+  "1,8,1243,Millbrae",
+  "1,16,565,Berkeley",
+  "1,54,934,Oakland",
+  "1,124,397,San Leandro",
+  "1,94,122,Alameda",
+  "1,67,397,Marin",
+  "1,34,932,Mountain View",
+  "1,73,811,San Jose",
+]
+
+list2 = [
+  "1,28,100,Rome",
+  "2,24,67,San Francisco",
+  "3,34,236,Los Angeles",
+  "1,3,124,Disneyland",
+  "1,865,335,Brazil",
+  "4,45,57,San Mateo",
+  "1,12,236,Daly City",
+  "7,41,789,San Bruno",
+  "9,8,1243,Millbrae",
+  "7,16,565,Berkeley",
+  "3,54,934,Oakland",
+  "4,124,397,San Leandro",
+  "4,94,122,Alameda",
+  "1,67,397,Marin",
+  "4,34,932,Mountain View",
+  "3,73,811,San Jose",
+]
+
+list3 = [
+  "1,28,100,Rome",
+  "1,24,67,San Francisco",
+  "1,34,236,Los Angeles",
+  "1,3,124,Disneyland",
+  "4,865,335,Brazil",
+  "1,45,57,San Mateo",
+  "4,12,236,Daly City",
+  "4,41,789,San Bruno",
+  "1,8,1243,Millbrae",
+  "1,16,565,Berkeley",
+  "1,54,934,Oakland",
+  "3,124,397,San Leandro",
+  "3,94,122,Alameda",
+  "3,67,397,Marin",
+  "1,34,932,Mountain View",
+  "1,73,811,San Jose",
+]
+
+list4 = [
+  "1,28,100,Rome",
+  "2,24,67,San Francisco",
+  "3,34,236,Los Angeles",
+  "4,3,124,Disneyland",
+  "1,865,335,Brazil",
+  "2,45,57,San Mateo",
+  "3,12,236,Daly City",
+  "1,41,789,San Bruno",
+  "1,8,1243,Millbrae",
+  "2,16,565,Berkeley",
+  "2,54,934,Oakland",
+  "3,124,397,San Leandro",
+  "3,94,122,Alameda",
+  "3,67,397,Marin",
+  "3,34,932,Mountain View",
+  "4,73,811,San Jose",
+]
+
+# page_ordering(4, list3)
+
+
+
+
+
+
+
+# challenge
+resultsPerPage = 5
+results = [
+  "1,28,300.6,San Francisco",
+  "4,5,209.1,San Francisco",
+  "20,7,203.4,Oakland",
+  "6,8,202.9,San Francisco",
+  "6,10,199.8,San Francisco",
+  "1,16,190.5,San Francisco",
+  "6,29,185.3,San Francisco",
+  "7,20,180.0,Oakland",
+  "6,21,162.2,San Francisco",
+  "2,18,161.7,San Jose",
+  "2,30,149.8,San Jose",
+  "3,76,146.7,San Francisco",
+  "2,14,141.8,San Jose"]
+
+def paginate(num, results)
+    output = []
+    res_per_page = num
+    stack = []
+    results.map! { |result| result.split(',') }
+
+    set = []
+
+    while results.length > 0
+        el = results[0]
+        if set.none? { |result| result[0] == el[0]}
+            set.push(results.shift)
+        else
+            stack.push(results.shift)
+        end
+
+        if set.length == res_per_page
+            output.push(set)
+            set = []
+            results.unshift(stack.pop) until stack.empty?
+        end
+    end
+
+      # [1,2,3,1,1,2,2,3,3] num = 5
+      # [1,2,3,1,1] [2,3,2,3]
+#       when there are not enough uniq hosts left, just split up the remaining elements into pages without checking
+
+    p stack
+    p set
+
+    until stack.empty?
+      # el = stack[0]
+      # if set.none? { |result| result[0] == el[0]
+        set.push(stack.shift)
+
+
+
+        if set.length == res_per_page
+            output.push(set)
+            set = []
+        end
+    end
+
+    output.push(set)
+    set = []
+    p stack
+    p set
+
+    output.map! do |dataset|
+        dataset.map! { |data| data.join(',')}
+    end
+
+    res = []
+    output.each_with_index do |dataset, idx|
+        dataset.each { |data| res.push(data) }
+        res.push('') unless idx == output.length - 1
+    end
+
+    res
+
 
 end
 
-
-
-#binary tree
-#traversing (in-order, pre-order, post-order)
-# in-order: left, root, right
-# pre-order: root, left, right
-# post-order: left, right, root
-
-# Given a non-empty binary tree, return the average value of the nodes on each level in the form of an array.
-# Input:
-#     3
-#    / \
-#   9  20
-#     /  \
-#    15   7
-# Output: [3, 14.5, 11]
-def average_of_levels(root)
-  count = []
-  res = []
-  average(root, 0, res, count)
-  res.each_with_index { |sum, idx| res[idx] = sum.to_f / count[idx]}
-end
-
-def average(node, level, res_of_nodelvl, count_of_nodelvl)
-  # pass in same level count to children of same node which adds sum and # of nodes in parent function's count/res
-  return if node == nil
-  res_of_nodelvl[level] ? res_of_nodelvl[level] += node.val : res_of_nodelvl[level] = node.val
-  count_of_nodelvl[level] ? count_of_nodelvl[level] += 1 : count_of_nodelvl[level] = 1
-
-  average(node.left, level + 1, res_of_nodelvl, count_of_nodelvl)
-  average(node.right, level + 1, res_of_nodelvl, count_of_nodelvl)
-end
+puts paginate(resultsPerPage, results)
