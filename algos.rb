@@ -1231,4 +1231,33 @@ def paginate(num, results)
 
 end
 
-puts paginate(resultsPerPage, results)
+# puts paginate(resultsPerPage, results)
+
+
+
+# Meraki Challenge
+# write a function that merges two merge sorted arrays
+# Example: a = [1, 3, 4], b = [2, 4], then result will be [1, 2, 3, 4, 4]
+
+a = [1, 3, 4]
+b = [2, 4]
+
+def merge(arr1, arr2)
+  output = []
+
+  while true
+    if arr1[0] > arr2[0]
+      output.push(arr2.shift)
+      break if arr2.empty?
+    else
+      output.push(arr1.shift)
+      break if arr1.empty?
+    end
+  end
+
+  output.concat(arr1).concat(arr2)
+
+  output
+end
+
+# p merge(a,b)

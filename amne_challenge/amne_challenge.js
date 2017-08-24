@@ -66,4 +66,4 @@ let testFilePath1 = "file:///Users/alnchen/Desktop/aA/algos/amne_challenge/test1
     testFilePath2 = "file:///Users/alnchen/Desktop/aA/algos/amne_challenge/test2.txt",
     testFilePath3 = "file://{link-to-your-local-txt-file}";
 
-subrangeDifference(testFilePath3);
+subrangeDifference(testFilePath1);
