@@ -1261,3 +1261,147 @@ def merge(arr1, arr2)
 end
 
 # p merge(a,b)
+
+
+
+
+
+# Given a non-negative integer num represented as a string, remove k digits
+# from the number so that the new number is the smallest possible.
+
+# Note:
+# The length of num is less than 10002 and will be ≥ k.
+# The given num does not contain any leading zero.
+
+def largest_num(num_str, k)
+
+end
+
+
+
+
+
+
+# Given a 2D board and a word, find if the word exists in the grid.
+#
+# The word can be constructed from letters of sequentially adjacent cell,
+# where "adjacent" cells are those horizontally or vertically neighboring.
+# The same letter cell may not be used more than once.
+#
+# For example,
+# Given board =
+# [
+#   ['A','B','C','E'],
+#   ['S','F','C','S'],
+#   ['A','D','E','E']
+# ]
+#
+# word = "ABCCED", -> returns true,
+# word = "SEE", -> returns true,
+# word = "ABCB", -> returns false.
+
+def exist(board, word)
+
+end
+
+
+
+
+
+
+=begin
+
+On our site, students can input the courses they are taking in any combination of a Department+Course Number followed by Semester+Year. A department is only alphabetic characters (one or more) and a course number is only numeric characters (one or more). Similarly, a semester is only alphabetic characters and a year is only numeric characters.
+
+"CS111 2016 Fall"
+"CS-111 Fall 2016"
+"MATH 123 2015 Spring"
+"CS 111 F2016"
+
+Valid forms of Department+Course Number are:
+CS111
+CS 111
+CS:111
+CS-111
+
+And valid forms of Semester+Year are:
+Fall 2016
+fall 16
+2016 Fall
+F2016
+
+Semesters are Fall (F), Winter (W), Spring (S), Summer (Su).
+
+For example, all of the above combinations would give you:
+Department: CS
+Course Number: 111
+Year: 2016
+Semester: Fall
+
+=end
+
+def details(str)
+  splitted = str.split(" ")
+
+  splitted.map! do |set|
+    splitter(set)
+  end
+
+  course_view(splitted.flatten)
+end
+
+def splitter(str)
+  nums = "1234567890"
+  letters = ("A".."Z").to_a
+  letters_output = ""
+  number_output = ""
+
+  str.chars.each do |char|
+    if nums.include?(char)
+      number_output += char
+    elsif letters.include?(char.upcase)
+      letters_output += char
+    end
+  end
+
+  if letters_output == ""
+    return number_output
+  elsif number_output == ""
+    return letters_output
+  end
+
+  [letters_output, number_output]
+end
+
+def course_view(data)
+  semesters = {
+    "F" => "Fall",
+    "W" => "Winter",
+    "S" => "Spring",
+    "Su" => "Summer"
+  }
+
+  department = data[0]
+  course_number = data[1]
+  year = nil
+  semester = nil
+
+  if semesters[data[2]] || semesters.value?(data[2])
+    year = data[3]
+    semester = semesters[data[2]] ? semesters[data[2]] : data[2]
+  else
+    year = data[2]
+    semester = semesters[data[3]] ? semesters[data[3]] : data[3]
+  end
+
+  puts "Department: #{department}"
+  puts "Course Number: #{course_number}"
+  puts "Year: #{year}"
+  puts "Semester: #{semester}"
+  puts "\n"
+end
+
+details("CS111 Fall 2016")
+details("CS 111 F2016")
+details("MATH 123 2015 Spring")
+details("CS-111 Fall 2016")
