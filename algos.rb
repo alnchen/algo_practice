@@ -1401,7 +1401,18 @@ def course_view(data)
   puts "\n"
 end
 
-details("CS111 Fall 2016")
-details("CS 111 F2016")
-details("MATH 123 2015 Spring")
-details("CS-111 Fall 2016")
+# details("CS111 Fall 2016")
+# details("CS 111 F2016")
+# details("MATH 123 2015 Spring")
+# details("CS-111 Fall 2016")
+
+
+
+
+
+# given n, find all nums a, b, c, d where a^2 + b^2 = c^2 + d^2 and a/b/c/d < n
+# do it in O(N^2) time complexity
+def matches(n)
+  pairs = {}
+  
+end
